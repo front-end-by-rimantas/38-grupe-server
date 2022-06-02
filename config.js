@@ -31,4 +31,5 @@ const options = config[env] ? config[env] : config.dev;
 // console.log('kur dirba kodas?');
 // console.log('Ka parasiau terminale:', nodeEnv);
 // console.log('Kokia aplinka turesiu paleisti:', env);
-console.log(options);
+
+export default options;
