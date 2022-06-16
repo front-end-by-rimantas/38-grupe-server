@@ -1,0 +1,1 @@
+console.log('Labas rytas is REGISTER 🎅');
