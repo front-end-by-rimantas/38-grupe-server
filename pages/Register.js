@@ -1,8 +1,8 @@
 import { PageTemplate } from "../lib/PageTemplate.js";
 
 class PageRegister extends PageTemplate {
-    constructor() {
-        super();
+    constructor(data) {
+        super(data);
     }
 
     mainHTML() {
