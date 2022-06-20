@@ -9,27 +9,31 @@ if (submitDOM) {
     submitDOM.addEventListener('click', (e) => {
         e.preventDefault();
 
-        const data = {};
-
         notificationsDOM.classList.remove('show');
-        notificationsDOM.innerText = '';
+
+        const data = {};
+        const errors = [];
 
         for (const inputDOM of inputsDOM) {
             if (inputDOM.type !== 'checkbox') {
                 const rule = inputDOM.dataset.validation;
-                const result = IsValid[rule](inputDOM.value);
-                if (result === true) {
-                    data[inputDOM.name] = inputDOM.value;
+                const [err, msg] = IsValid[rule](inputDOM.value);
+
+                if (err) {
+                    errors.push(msg);
                 } else {
-                    notificationsDOM.classList.add('show');
-                    notificationsDOM.innerHTML += `<p>${result}</p>`;
+                    data[inputDOM.name] = inputDOM.value;
                 }
             } else {
                 data[inputDOM.name] = inputDOM.checked;
             }
         }
 
-        console.log(data);
+        if (errors.length) {
+            notificationsDOM.classList.add('show');
+            // notificationsDOM.innerHTML = errors.map(e => `<p>${e}.</p>`).join('');
+            notificationsDOM.innerText = errors.join('.\n') + '.';
+        }
 
         // tikriname ar laukai ne tusti
         // tikriname ar geros vertes:
