@@ -197,7 +197,7 @@ describe('Email', () => {
         test('empty string', () => {
             const [err, msg] = IsValid.email('');
             expect(err).toBe(true);
-            expect(msg).toBe('Per trumpas tekstas, turi buti minimum 5 simboliai');
+            expect(msg).toBe('Per trumpas tekstas, turi buti minimum 6 simboliai');
         })
     })
 
@@ -230,6 +230,44 @@ describe('Email', () => {
 
         test('ok (3)', () => {
             const [err, msg] = IsValid.email('petras.petraitis@petras.xyz');
+            expect(err).toBe(false);
+            expect(msg).toBe('OK');
+        })
+    })
+})
+
+describe('Password', () => {
+    describe('Gaudome netinkamus tipus', () => {
+        test('no params', () => {
+            const [err, msg] = IsValid.password();
+            expect(err).toBe(true);
+            expect(msg).toBe('Neduotas parametras');
+        })
+    })
+
+    describe('Gauname netinkamas reiksmes', () => {
+        test('empty string', () => {
+            const [err, msg] = IsValid.password('');
+            expect(err).toBe(true);
+            expect(msg).toBe('Per trumpas tekstas, turi buti minimum 8 simboliai');
+        })
+    })
+
+    describe('Gauname tinkamas reiksmes', () => {
+        test('ok (1)', () => {
+            const [err, msg] = IsValid.password('qwertyui');
+            expect(err).toBe(false);
+            expect(msg).toBe('OK');
+        })
+
+        test('ok (2)', () => {
+            const [err, msg] = IsValid.password('AdeD526665');
+            expect(err).toBe(false);
+            expect(msg).toBe('OK');
+        })
+
+        test('ok (3)', () => {
+            const [err, msg] = IsValid.password('./?<>{}+-');
             expect(err).toBe(false);
             expect(msg).toBe('OK');
         })
