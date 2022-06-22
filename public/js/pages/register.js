@@ -41,9 +41,21 @@ if (submitDOM) {
             // notificationsDOM.innerHTML = errors.map(e => `<p>${e}.</p>`).join('');
             notificationsDOM.innerText = errors.join('.\n') + '.';
         } else {
-            console.log('KLAIDU NERASTA...');
-            console.log('SIUNCIAM DUOMENIS I SERVERI...');
-            console.log(data);
+            delete data.repass;
+            delete data.tos;
+
+            async function postData() {
+                const response = await fetch(formDOM.action, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data),
+                });
+                return response.json();
+            }
+
+            postData();
         }
 
         // tikriname ar laukai ne tusti
