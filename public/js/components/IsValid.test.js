@@ -333,19 +333,19 @@ describe('Email', () => {
         })
     })
 
-    // describe('Gauname tinkamas reiksmes, bet su atleistinomis klaidomis', () => {
-    //     test('many spaces in front', () => {
-    //         const [err, msg] = IsValid.email('  petras@petras.xyz');
-    //         expect(err).toBe(false);
-    //         expect(msg).toBe('OK');
-    //     })
+    describe('Gauname tinkamas reiksmes, bet su atleistinomis klaidomis', () => {
+        test('many spaces in front', () => {
+            const [err, msg] = IsValid.email('  petras@petras.xyz');
+            expect(err).toBe(false);
+            expect(msg).toBe('OK');
+        })
 
-    //     test('many spaces at the end', () => {
-    //         const [err, msg] = IsValid.email('petras@petras.xyz   ');
-    //         expect(err).toBe(false);
-    //         expect(msg).toBe('OK');
-    //     })
-    // })
+        test('many spaces at the end', () => {
+            const [err, msg] = IsValid.email('petras@petras.xyz   ');
+            expect(err).toBe(false);
+            expect(msg).toBe('OK');
+        })
+    })
 
     describe('Gauname tinkamas reiksmes', () => {
         test('correct value', () => {

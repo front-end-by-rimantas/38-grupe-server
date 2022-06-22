@@ -53,6 +53,7 @@ class IsValid {
         if (typeof str !== 'string') {
             return [true, 'Netinkamas tipas, turi buti "string"'];
         }
+        str = str.trim();
         if (str === '') {
             return [true, 'Neivestas email adresas'];
         }
