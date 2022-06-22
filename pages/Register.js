@@ -9,11 +9,12 @@ class PageRegister extends PageTemplate {
     }
 
     mainHTML() {
+        const isDev = config.name === 'dev';
         const formValues = {
-            fullname: config.name === 'dev' ? 'Chuck Norris' : '',
-            email: config.name === 'dev' ? 'chuck@norris.com' : '',
-            pass: config.name === 'dev' ? 'chucknorrischucknorris' : '',
-            repass: config.name === 'dev' ? 'chucknorrischucknorris2' : '',
+            fullname: isDev ? 'Chuck Norris' : '',
+            email: isDev ? 'chuck@norris.com' : '',
+            pass: isDev ? 'chucknorrischucknorris' : '',
+            repass: isDev ? 'chucknorrischucknorris2' : '',
         }
         return `<div class="row">
                     <h1>Register</h1>
