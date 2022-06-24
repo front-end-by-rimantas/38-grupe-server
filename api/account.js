@@ -33,7 +33,8 @@ handler._innerMethods.post = (data, res) => {
         - isitikinti, jog atejusiame objekte nera kitu key's apart: email, fullname ir password
     */
 
-    if (Object.keys(payload).length > 3) {
+    const allowedKeys = ['fullname', 'email', 'pass'];
+    if (Object.keys(payload).length > allowedKeys.length) {
         return res.end(JSON.stringify('Atsiustuose duomenyse gali buti tik: fullname, email ir pass'));
     }
 
