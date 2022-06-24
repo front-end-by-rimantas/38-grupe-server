@@ -1,4 +1,4 @@
-import { IsValid } from "../public/js/components/IsValid.js";
+import { IsValid } from "../lib/is-valid/IsValid.js";
 
 const handler = {};
 
