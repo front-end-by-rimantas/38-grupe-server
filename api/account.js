@@ -4,17 +4,17 @@ import { utils } from "../lib/utils.js";
 
 const handler = {};
 
-handler.account = (data, callback) => {
+handler.account = async (data, callback) => {
     // kliento intensija - ka jis nori daryti?
     const acceptableMethods = ['get', 'post', 'put', 'delete'];
 
     if (acceptableMethods.includes(data.httpMethod)) {
         const httpMethodFunc = handler._innerMethods[data.httpMethod];
-        return httpMethodFunc(data, callback);
+        return await httpMethodFunc(data, callback);
     }
 
     return callback(405, {
-        msg: 'Tavo norimas HTTPmethod yra nepalaikomas'
+        msg: 'Tavo norimas HTTPmethod yra nepalaikomas',
     });
 }
 
@@ -92,8 +92,7 @@ handler._innerMethods.post = async (data, callback) => {
             - siunciam patvirtinimo laiska
         - jei nepavyko - error
     */
-    const [createErr, createMsg] = await file.create('accounts', email + '.json', payload);
-    console.log(createMsg);
+    const [createErr] = await file.create('accounts', email + '.json', payload);
     if (createErr) {
         return callback(500, {
             msg: 'Nepavyko sukurti paskyrtos del vidines serverio klaidos. Pabandykite veliau',
