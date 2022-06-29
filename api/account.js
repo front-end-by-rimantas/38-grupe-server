@@ -132,7 +132,7 @@ handler._innerMethods.get = async (data, callback) => {
         });
     }
 
-    delete userData.pass;
+    delete userData.hashedPassword;
 
     return callback(200, {
         msg: userData,
@@ -141,9 +141,64 @@ handler._innerMethods.get = async (data, callback) => {
 
 // PUT (kapitalinis info pakeistimas)
 // PATCH (vienos info dalies pakeitimas)
-handler._innerMethods.put = (data, callback) => {
+// Leidziam pasikeisti tik: fullname, pass -> hashedPassword
+handler._innerMethods.put = async (data, callback) => {
+    const { payload } = data;
+    const email = data.searchParams.get('email');
+
+    const [emailErr, emailMsg] = IsValid.email(email);
+    if (emailErr) {
+        return callback(400, {
+            msg: emailMsg,
+        });
+    }
+
+    const [validErr, validMsg] = utils.objectValidator(payload, {
+        optional: ['fullname', 'pass'],
+    });
+
+    if (validErr) {
+        return callback(400, {
+            msg: validMsg,
+        });
+    }
+
+    const { fullname, pass } = payload;
+
+    const [fullnameErr, fullnameMsg] = IsValid.fullname(fullname);
+    if (fullnameErr) {
+        return callback(400, {
+            msg: fullnameMsg,
+        });
+    }
+
+    const [passErr, passMsg] = IsValid.password(pass);
+    if (passErr) {
+        return callback(400, {
+            msg: passMsg,
+        });
+    }
+
+    const [readErr, readMsg] = await file.read('accounts', email + '.json');
+    if (readErr) {
+        return callback(404, {
+            msg: 'Toks vartotojas neegzistouja, arba nepavyko gauti duomenu del teisiu trukumo',
+        });
+    }
+
+    const [parseErr, userData] = utils.parseJSONtoObject(readMsg);
+    if (parseErr) {
+        return callback(500, {
+            msg: 'Nepavyko atnaujinti paskyros informacijos, del vidines serverio klaidos',
+        });
+    }
+
+
+
+    // const [updateErr, updateMsg] = await file.update('accounts', email + '.json', payload);
+
     return callback(200, {
-        msg: 'Account: put',
+        msg: 'Vartotojo informacija sekmingai atnaujinta',
     });
 }
 
