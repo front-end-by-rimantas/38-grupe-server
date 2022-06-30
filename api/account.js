@@ -88,6 +88,8 @@ handler._innerMethods.post = async (data, callback) => {
 
     delete payload.pass;
     payload.hashedPassword = utils.hash(pass)[1];
+    payload.lastLoginDate = 0;
+    payload.registrationData = Date.now();
 
     const [createErr] = await file.create('accounts', email + '.json', payload);
     if (createErr) {
@@ -218,7 +220,7 @@ handler._innerMethods.put = async (data, callback) => {
 }
 
 // DELETE
-handler._innerMethods.delete = (data, callback) => {
+handler._innerMethods.delete = async (data, callback) => {
     // 1) suzinoti apie kuri vartotoja norima gauti duomenis
     const email = data.searchParams.get('email');
 
