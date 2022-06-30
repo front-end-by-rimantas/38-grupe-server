@@ -201,8 +201,12 @@ handler._innerMethods.put = async (data, callback) => {
         });
     }
 
-    userData.fullname = fullname;
-    userData.pass = pass;
+    if (fullname) {
+        userData.fullname = fullname;
+    }
+    if (pass) {
+        userData.hashedPassword = utils.hash(pass)[1];
+    }
 
     const [updateErr] = await file.update('accounts', email + '.json', userData);
 
