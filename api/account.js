@@ -163,10 +163,7 @@ handler._innerMethods.put = async (data, callback) => {
         });
     }
 
-    // cia kazkur klaida: start
     const { fullname, pass } = payload;
-
-    console.log(fullname, pass);
 
     if (fullname) {
         const [fullnameErr, fullnameMsg] = IsValid.fullname(fullname);
@@ -185,7 +182,6 @@ handler._innerMethods.put = async (data, callback) => {
             });
         }
     }
-    // cia kazkur klaida: end
 
     const [readErr, readMsg] = await file.read('accounts', email + '.json');
     if (readErr) {
