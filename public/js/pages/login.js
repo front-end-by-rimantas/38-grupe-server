@@ -27,7 +27,6 @@ if (submitDOM) {
 
         if (errors.length) {
             notificationsDOM.classList.add('show');
-            // notificationsDOM.innerHTML = errors.map(e => `<p>${e}.</p>`).join('');
             notificationsDOM.innerText = errors.join('.\n') + '.';
         } else {
             const response = await fetch(formDOM.action, {
@@ -41,8 +40,6 @@ if (submitDOM) {
 
             notificationsDOM.innerText = resBody.msg;
             notificationsDOM.classList.add('show');
-
-            console.log(response);
 
             if (response.ok) {
                 notificationsDOM.classList.add('success');

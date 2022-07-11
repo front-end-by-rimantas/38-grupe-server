@@ -58,6 +58,33 @@ handler._innerMethods.post = async (data, callback) => {
     }
 
     // 2. Patikrinti ar egzistuoja account
+    const [readErr, readMsg] = await file.read('accounts', email + '.json');
+    if (readErr) {
+        return callback(400, {
+            msg: 'Vartotojas nerastas, arba neteisingas slaptazodis',
+        });
+    }
+
+    const [parseErr, userObject] = utils.parseJSONtoObject(readMsg);
+    if (parseErr) {
+        return callback(500, {
+            msg: 'Nepavyko atlikti vartotojo informacijos paieskos',
+        });
+    }
+
+    const [hashErr, hashedLoginPassword] = utils.hash(pass);
+    if (hashErr) {
+        return callback(500, {
+            msg: 'Nepavyko atlikti vartotojo informacijos paieskos',
+        });
+    }
+
+    if (hashedLoginPassword !== userObject.hashedPassword) {
+        return callback(400, {
+            msg: 'Vartotojas nerastas, arba neteisingas slaptazodis',
+        });
+    }
+
     // 3. Suteikti prieiga prie sistemos
 
     return callback(200, {
