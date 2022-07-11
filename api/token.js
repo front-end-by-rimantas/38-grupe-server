@@ -87,11 +87,35 @@ handler._innerMethods.post = async (data, callback) => {
     }
 
     // 3. Suteikti prieiga prie sistemos
-    const randomToken = utils.randomString(config.sessionTokenLength);
-    console.log(randomToken);
+    const randomToken = utils.randomString(config.sessionToken.length);
+
+    const tokenObject = {
+        email,
+        hardDeadline: Math.floor(Date.now() / 1000) + config.sessionToken.hardDeadline,
+    }
+
+    const [createErr] = await file.create('token', randomToken + '.json', tokenObject);
+    if (createErr) {
+        return callback(500, {
+            msg: 'Nepavyko sukurti vartotojo sesijos',
+        });
+    }
+
+    const cookies = [
+        'login-token=' + randomToken,
+        'path=/',
+        'domain=localhost',
+        'max-age=' + tokenObject.hardDeadline,
+        'expires=Sun, 16 Jul 3567 06:23:41 GMT',
+        // 'Secure',
+        'SameSite=Lax',
+        'HttpOnly',
+    ];
 
     return callback(200, {
         msg: 'Token sukurtas sekmingai',
+    }, {
+        'Set-Cookie': cookies.join('; '),
     });
 }
 
