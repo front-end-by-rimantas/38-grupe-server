@@ -44,8 +44,6 @@ if (submitDOM) {
             delete data.repass;
             delete data.tos;
 
-            // async/await
-
             const response = await fetch(formDOM.action, {
                 method: 'POST',
                 headers: {

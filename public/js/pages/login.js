@@ -38,13 +38,25 @@ if (submitDOM) {
             });
             const resBody = await response.json();
 
-            notificationsDOM.innerText = resBody.msg;
-            notificationsDOM.classList.add('show');
+            switch (resBody.msgType) {
+                case 'error':
+                    notificationsDOM.innerText = resBody.msg;
+                    notificationsDOM.classList.remove('success');
+                    notificationsDOM.classList.add('show');
+                    break;
 
-            if (response.ok) {
-                notificationsDOM.classList.add('success');
-            } else {
-                notificationsDOM.classList.remove('success');
+                case 'success':
+                    notificationsDOM.innerText = resBody.msg;
+                    notificationsDOM.classList.add('success', 'show');
+                    break;
+
+                case 'redirect':
+                    location.href = resBody.href;
+                    break;
+
+                default:
+                    console.log('Toks msgType nerastas:', resBody.msgType);
+                    break;
             }
         }
     })
