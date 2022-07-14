@@ -14,7 +14,12 @@ config.dev = {
     cache: {
         default: 0,
         periods: {},
-    }
+    },
+    hashingSecret: '548efr525arf5d5a4f5fd4ad',
+    sessionToken: {
+        length: 10,
+        hardDeadline: 24 * 60 * 60,
+    },
 }
 
 config.prod = {
@@ -46,7 +51,12 @@ config.prod = {
             pdf: 60 * 60,
             json: 60 * 60,
         },
-    }
+    },
+    hashingSecret: '5t48gs5fres4g5fd2f64wt8g52g65t8wy4ey5htui4752r88e4fk5jdgr487fh51f5h84fk548trsg',
+    sessionToken: {
+        length: 30,
+        hardDeadline: 28 * 24 * 60 * 60,
+    },
 }
 
 const nodeEnv = process.env.NODE_ENV;
