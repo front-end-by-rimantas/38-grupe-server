@@ -108,26 +108,17 @@ handler._innerMethods.post = async (data, callback) => {
 
 // GET
 handler._innerMethods.get = async (data, callback) => {
-    return callback(200, {
-        msgType: 'success',
-        msg: 'Token informacija',
-    });
+    return callback(200, ApiResponse.success('Token informacija'));
 }
 
 // PUT (kapitalinis info pakeistimas)
 handler._innerMethods.put = async (data, callback) => {
-    return callback(200, {
-        msgType: 'success',
-        msg: 'Token informacija sekmingai atnaujinta',
-    });
+    return callback(200, ApiResponse.success('Token informacija sekmingai atnaujinta'));
 }
 
 // DELETE
 handler._innerMethods.delete = async (data, callback) => {
-    return callback(200, {
-        msgType: 'success',
-        msg: 'Token istrintas sekmingai',
-    });
+    return callback(200, ApiResponse.success('Token istrintas sekmingai'));
 }
 
 handler._innerMethods.verify = async (tokenStr) => {
