@@ -8,7 +8,7 @@
         "dev": "nodemon ./index.js",
         "prod": "NODE_ENV=prod node .",
         "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --passWithNoTests",
-        "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll --passWithNoTests"
+        "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --config ./jest.coverage.config.js --watchAll --passWithNoTests"
     },
     "keywords": [],
     "author": "Rimantas",
